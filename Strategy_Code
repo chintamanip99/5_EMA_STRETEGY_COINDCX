@@ -7,13 +7,12 @@ import datetime
 import requests
 from typing import Dict, List, Optional, Tuple
 import time
-import random
 
 # ==================== CONFIG ====================
-BREAKOUT_ON_CLOSE = False
+BREAKOUT_ON_CLOSE = False   # False => wick/price based (per your rule)
 
 # ==================== TIMEFRAME CONFIG ====================
-TIMEFRAME_MINUTES = 5
+TIMEFRAME_MINUTES = 1
 TIMEFRAME_MS = TIMEFRAME_MINUTES * 60 * 1000
 _INTERVAL_MAP = {
     1: "1m", 3: "3m", 5: "5m", 15: "15m", 30: "30m",
@@ -24,26 +23,19 @@ WS_CHANNEL_SUFFIX = COINDCX_INTERVAL
 PAIR = "B-AKE_USDT"
 
 # CoinDCX REST candles for this futures pair only accept these intervals
-# (a 5m request returns HTTP 422: "interval must be one of [1m, 15m, 1h, 1d]").
-# For any other timeframe we download 1m candles and resample them locally.
 REST_SUPPORTED_INTERVALS = {"1m": 60_000, "15m": 900_000, "1h": 3_600_000, "1d": 86_400_000}
 REST_INTERVAL = COINDCX_INTERVAL if COINDCX_INTERVAL in REST_SUPPORTED_INTERVALS else "1m"
 REST_INTERVAL_MS = REST_SUPPORTED_INTERVALS[REST_INTERVAL]
 
 # ==================== HISTORY FETCH CONFIG ====================
-# Primary request: startTime/endTime over the last HISTORY_DAYS days (no `limit`),
-# using REST_INTERVAL candles (1m) that are resampled to the strategy timeframe.
-# If that is rejected, we fall back to a request capped at HISTORY_CANDLES
-# (the API maximum per request is 1000), then to a plain "latest candles" call.
 HISTORY_DAYS = 5
 HISTORY_CANDLES = 1000
-# Synthetic (random) data must NEVER drive live signals; keep this False.
 USE_SYNTHETIC_FALLBACK = False
 
 # ==================== RISK / REWARD CONFIG ====================
 RISK_PER_TRADE = 0.01
 REWARD_MULTIPLE = 3.0   # R:R = 1:3
-MAX_LEVERAGE = 5.0      # cap on notional = balance * MAX_LEVERAGE
+MAX_LEVERAGE = 5.0
 
 # ==================== GLOBAL VARIABLES ====================
 full_data = []
@@ -51,7 +43,6 @@ last_price = 0
 LOOKBACK = 100
 position = None
 alert_candle = None
-ema5_value = None
 candle_counter = 0
 initial_balance = 10000
 current_balance = initial_balance
@@ -60,35 +51,11 @@ pnl = 0
 current_candle_ts = None
 last_processed_candle_ts = None
 
-# ==================== "NOT TOUCHING" CONFIG ====================
-# The alert candle MUST NOT touch the 5 EMA line.
-#
-# required_gap = max(EMA * EMA_REL_EPS, candle_range * RANGE_REL_EPS, MIN_ABS_GAP)
-#
-# Bull: (EMA_ref - High) must be > required_gap
-# Bear: (Low - EMA_ref) must be > required_gap
-EMA_REL_EPS   = 5e-4    # 0.05% of EMA
-RANGE_REL_EPS = 0.10    # 10% of the candle's High-Low range
-MIN_ABS_GAP   = 1e-9
-
-# STRICT_SEGMENT_CHECK: the EMA line on a chart is a sloped line joining
-# consecutive EMA values. A candle can visually touch that line even when its
-# High is below the EMA value of its own bar. With this ON, the reference EMA is:
-#   bull: min(EMA[i], EMA[i-1])   (the lower end of the line near the candle)
-#   bear: max(EMA[i], EMA[i-1])   (the upper end of the line near the candle)
-STRICT_SEGMENT_CHECK = True
-
 # ==================== CLOSED-CANDLE VERIFICATION ====================
-# The websocket's last tick of a candle can be a few seconds stale, so the
-# "closed" candle's High/Low may be incomplete (and may actually have touched
-# the EMA). On every candle close we re-fetch the official candle over REST,
-# overwrite our copy, recompute EMA5, and only then run the alert check.
 VERIFY_CLOSED_CANDLE = True
-REQUIRE_VERIFIED_CANDLE = True   # if REST can't confirm the candle, skip the alert
+REQUIRE_VERIFIED_CANDLE = True
 VERIFY_RETRIES = 3
 VERIFY_DELAY_S = 1.5
-# Wait this long after a candle's end before treating the REST copy as final
-# (the exchange needs a moment to finish building the last 1m candle).
 FINALITY_GRACE_MS = 5000
 
 
@@ -118,12 +85,10 @@ def clean_full_data(data: List[Dict]) -> List[Dict]:
     by_ts: Dict[int, Dict] = {}
     for row in valid:
         by_ts[int(row['timestamp'])] = row
-    cleaned = [by_ts[ts] for ts in sorted(by_ts.keys())]
-    return cleaned
+    return [by_ts[ts] for ts in sorted(by_ts.keys())]
 
 
 def _parse_rest_candle(d: Dict, fallback_ts: int = 0, seq: int = 0) -> Dict:
-    """Parse one REST candle. Timestamp is aligned to the REST interval (not the strategy timeframe)."""
     ts = int(d.get("time", fallback_ts))
     ts = (ts // REST_INTERVAL_MS) * REST_INTERVAL_MS
     return {
@@ -138,7 +103,6 @@ def _parse_rest_candle(d: Dict, fallback_ts: int = 0, seq: int = 0) -> Dict:
 
 
 def _resample_candles(rows: List[Dict]) -> List[Dict]:
-    """Aggregate REST candles (e.g. 1m) into TIMEFRAME_MS buckets. No-op if intervals match."""
     if not rows or REST_INTERVAL_MS == TIMEFRAME_MS:
         return rows
     out: Dict[int, Dict] = {}
@@ -160,7 +124,6 @@ def _resample_candles(rows: List[Dict]) -> List[Dict]:
 def _get_candles(start_ms: Optional[int] = None,
                  end_ms: Optional[int] = None,
                  limit: Optional[int] = 1000) -> List[Dict]:
-    """Single CoinDCX candles request. limit=None omits the parameter. Raises with the server message."""
     params = {"pair": PAIR, "interval": REST_INTERVAL}
     if limit is not None:
         params["limit"] = int(min(limit, 1000))
@@ -186,7 +149,7 @@ def fetch_historical_data():
         (f"{HISTORY_DAYS}-day range", start_ms_days, end_ms, None),
         (f"last {HISTORY_CANDLES} candles", end_ms - HISTORY_CANDLES * REST_INTERVAL_MS,
          end_ms, HISTORY_CANDLES),
-        ("latest", None, None, 500),   # no time range, API default window
+        ("latest", None, None, 500),
     ]
     for name, start_ms, stop_ms, limit in attempts:
         try:
@@ -221,11 +184,6 @@ def fetch_historical_data():
 
 
 def fetch_closed_candle(ts: int) -> Optional[Dict]:
-    """
-    Official final candle for strategy bucket `ts`, built from REST candles
-    (resampled if REST doesn't support the strategy timeframe).
-    Waits until the bucket is final before asking.
-    """
     final_at_s = (ts + TIMEFRAME_MS + FINALITY_GRACE_MS) / 1000.0
     wait = final_at_s - time.time()
     if wait > 0:
@@ -254,10 +212,6 @@ def fetch_closed_candle(ts: int) -> Optional[Dict]:
 
 
 def sync_closed_candle(df: pd.DataFrame) -> Tuple[pd.DataFrame, bool]:
-    """
-    Replace the just-closed candle (index -2) with the official REST candle,
-    update global full_data, and recompute EMA5. Returns (df, verified).
-    """
     global full_data
     if not VERIFY_CLOSED_CANDLE or len(df) < 3:
         return df, True
@@ -313,7 +267,6 @@ def generate_synthetic_data():
 # ==================== INDICATOR FUNCTIONS ====================
 
 def calculate_indicators(df: pd.DataFrame) -> pd.DataFrame:
-    """EMA5 is causal. Leave NaN where warmup hasn't completed."""
     if len(df) < 5:
         return df
     df = df.copy()
@@ -321,39 +274,13 @@ def calculate_indicators(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-# ==================== TOUCH CHECK ====================
-
-def _required_gap(ema_ref: float, candle_high: float, candle_low: float) -> float:
-    candle_range = max(0.0, float(candle_high) - float(candle_low))
-    return max(abs(ema_ref) * EMA_REL_EPS,
-               candle_range * RANGE_REL_EPS,
-               MIN_ABS_GAP)
-
-
-def _ref_ema(df: pd.DataFrame, idx: int, kind: str) -> Optional[float]:
-    """
-    EMA value the candle must stay clear of.
-    bullish -> lower of EMA[idx], EMA[idx-1]; bearish -> higher of the two.
-    """
-    ema = df['ema_5'].iloc[idx]
-    if pd.isna(ema) or ema <= 0:
-        return None
-    ema = float(ema)
-    if STRICT_SEGMENT_CHECK and idx > 0:
-        prev = df['ema_5'].iloc[idx - 1]
-        if not pd.isna(prev) and prev > 0:
-            prev = float(prev)
-            ema = min(ema, prev) if kind == 'bullish' else max(ema, prev)
-    return ema
-
-
 # ==================== STRATEGY FUNCTIONS ====================
 
 def check_alert_candle(df: pd.DataFrame) -> Tuple[Optional[Dict], Optional[str], Optional[int]]:
     """
     Alert candle = last COMPLETED candle (index -2).
-    Bullish: green AND High clearly below EMA (gap > required_gap).
-    Bearish: red   AND Low  clearly above EMA (gap > required_gap).
+    Bullish: green AND High < EMA5 (high strictly below EMA5 — no touching).
+    Bearish: red   AND Low  > EMA5 (low  strictly above EMA5 — no touching).
     """
     if len(df) < 6 or 'ema_5' not in df.columns:
         return None, None, None
@@ -366,38 +293,35 @@ def check_alert_candle(df: pd.DataFrame) -> Tuple[Optional[Dict], Optional[str],
     ema5 = float(ema5)
 
     last_candle = row.to_dict()
-    o, h, l, c = (float(last_candle['Open']), float(last_candle['High']),
-                  float(last_candle['Low']),  float(last_candle['Close']))
+    o = float(last_candle['Open'])
+    h = float(last_candle['High'])
+    l = float(last_candle['Low'])
+    c = float(last_candle['Close'])
 
     if c > o:
         kind = 'bullish'
+        if h < ema5:                     # high NOT touching EMA5
+            stored = dict(last_candle)
+            stored['ema5_at_alert'] = ema5
+            print(f"\n🔎 BULL ACCEPT: O={o:.10f} H={h:.10f} C={c:.10f} "
+                  f"EMA5={ema5:.10f} (H < EMA5)")
+            return stored, kind, last_idx
+        else:
+            print(f"\n🚫 BULL REJECTED (touching/above EMA5): H={h:.10f} EMA5={ema5:.10f}")
+            return None, None, None
+
     elif c < o:
         kind = 'bearish'
-    else:
-        return None, None, None
+        if l > ema5:                     # low NOT touching EMA5
+            stored = dict(last_candle)
+            stored['ema5_at_alert'] = ema5
+            print(f"\n🔎 BEAR ACCEPT: O={o:.10f} L={l:.10f} C={c:.10f} "
+                  f"EMA5={ema5:.10f} (L > EMA5)")
+            return stored, kind, last_idx
+        else:
+            print(f"\n🚫 BEAR REJECTED (touching/below EMA5): L={l:.10f} EMA5={ema5:.10f}")
+            return None, None, None
 
-    ref = _ref_ema(df, last_idx, kind)
-    if ref is None:
-        return None, None, None
-
-    req = _required_gap(ref, h, l)
-    gap = (ref - h) if kind == 'bullish' else (l - ref)
-
-    if gap > req:
-        stored = dict(last_candle)
-        stored['ema5_at_alert'] = ema5
-        stored['ema_ref_at_alert'] = ref
-        stored['gap_at_alert'] = gap
-        stored['required_gap_at_alert'] = req
-        tag = "BULL" if kind == 'bullish' else "BEAR"
-        print(f"\n🔎 {tag} ACCEPT: ema5={ema5:.10f} ref={ref:.10f} "
-              f"gap={gap:.10f} req={req:.10f}")
-        return stored, kind, last_idx
-
-    if gap > -(h - l):   # near-miss or touching: log it for transparency
-        tag = "BULL" if kind == 'bullish' else "BEAR"
-        print(f"\n🚫 {tag} REJECTED (touching/too close): ref={ref:.10f} "
-              f"H={h:.10f} L={l:.10f} gap={gap:.10f} req={req:.10f}")
     return None, None, None
 
 
@@ -413,33 +337,14 @@ def check_breakout_live(df: pd.DataFrame,
                         alert_type: str,
                         alert_ts: int) -> Tuple[bool, bool, Optional[float]]:
     """
-    LIVE breakout check — runs on every tick.
+    Breakout must happen on the IMMEDIATELY NEXT candle.
+    Bullish: next candle High > alert High  → long, entry = alert High.
+    Bearish: next candle Low  < alert Low   → short, entry = alert Low.
     Returns (breakout, invalidated, fill_price).
     """
     alert_idx = _resolve_alert_index(df, alert_ts)
     if alert_idx is None:
         return False, True, None
-
-    # --- Immutable touch re-check using the stored reference EMA ---
-    ema_ref = float(alert_candle_data.get('ema_ref_at_alert',
-                                          alert_candle_data.get('ema5_at_alert', 0.0)))
-    req_alert = float(alert_candle_data.get('required_gap_at_alert',
-                                            _required_gap(ema_ref,
-                                                          alert_candle_data['High'],
-                                                          alert_candle_data['Low'])))
-    o, h, l, c = (float(alert_candle_data['Open']), float(alert_candle_data['High']),
-                  float(alert_candle_data['Low']),  float(alert_candle_data['Close']))
-    if ema_ref <= 0:
-        return False, True, None
-    if alert_type == 'bullish':
-        if not (c > o and (ema_ref - h) > req_alert):
-            print(f"\n🛑 BLOCKED: alert candle touches EMA5 (stored check).")
-            return False, True, None
-    else:
-        if not (c < o and (l - ema_ref) > req_alert):
-            print(f"\n🛑 BLOCKED: alert candle touches EMA5 (stored check).")
-            return False, True, None
-    # ----------------------------------------------------------------
 
     next_idx = alert_idx + 1
     if next_idx >= len(df):
@@ -451,60 +356,33 @@ def check_breakout_live(df: pd.DataFrame,
     alert_high = float(alert_candle_data['High'])
     alert_low  = float(alert_candle_data['Low'])
 
-    breakout = False
-    fill_price = None
-
     if alert_type == 'bullish':
         live_high  = float(next_candle['High'])
         live_close = float(next_candle['Close'])
         if BREAKOUT_ON_CLOSE:
             breakout = live_close > alert_high
-            fill_price = live_close
+            fill_price = live_close if breakout else None
         else:
-            breakout = (live_high > alert_high) or (live_close > alert_high)
-            if breakout:
-                fill_price = max(alert_high,
-                                 float(next_candle['Open']),
-                                 live_close)
+            breakout = live_high > alert_high
+            fill_price = alert_high if breakout else None
     else:
         live_low   = float(next_candle['Low'])
         live_close = float(next_candle['Close'])
         if BREAKOUT_ON_CLOSE:
             breakout = live_close < alert_low
-            fill_price = live_close
+            fill_price = live_close if breakout else None
         else:
-            breakout = (live_low < alert_low) or (live_close < alert_low)
-            if breakout:
-                fill_price = min(alert_low,
-                                 float(next_candle['Open']),
-                                 live_close)
+            breakout = live_low < alert_low
+            fill_price = alert_low if breakout else None
 
     if breakout:
         return True, False, fill_price
 
+    # If the next candle has closed without a breakout -> invalidate
     if not is_forming:
         return False, True, None
 
     return False, False, None
-
-
-def calculate_gap_for_status(df: pd.DataFrame) -> Tuple[Optional[float], Optional[str], Optional[str]]:
-    if len(df) < 6 or 'ema_5' not in df.columns:
-        return None, None, None
-    last_idx = len(df) - 2
-    row = df.iloc[last_idx]
-    o, h, l, c = (float(row['Open']), float(row['High']),
-                  float(row['Low']),  float(row['Close']))
-
-    if c > o:
-        ref = _ref_ema(df, last_idx, 'bullish')
-        if ref is not None and (ref - h) > _required_gap(ref, h, l):
-            return ref - h, 'below', 'bullish'
-    elif c < o:
-        ref = _ref_ema(df, last_idx, 'bearish')
-        if ref is not None and (l - ref) > _required_gap(ref, h, l):
-            return l - ref, 'above', 'bearish'
-    return None, None, None
 
 
 def enter_position(alert_candle_data: Dict,
@@ -515,7 +393,7 @@ def enter_position(alert_candle_data: Dict,
 
     if alert_type == 'bullish':
         if entry_price is None:
-            entry_price = alert_candle_data['High']
+            entry_price = alert_candle_data['High']   # breakout level
         stop_loss = alert_candle_data['Low']
         risk = entry_price - stop_loss
         if risk <= 0:
@@ -525,7 +403,7 @@ def enter_position(alert_candle_data: Dict,
         pos_type = 'long'
     else:
         if entry_price is None:
-            entry_price = alert_candle_data['Low']
+            entry_price = alert_candle_data['Low']    # breakout level
         stop_loss = alert_candle_data['High']
         risk = stop_loss - entry_price
         if risk <= 0:
@@ -572,10 +450,8 @@ def enter_position(alert_candle_data: Dict,
     print(f"  Alert candle @ {alert_time}: "
           f"O={alert_candle_data['Open']:.8f} H={alert_candle_data['High']:.8f} "
           f"L={alert_candle_data['Low']:.8f} C={alert_candle_data['Close']:.8f}")
-    print(f"  EMA5@alert={alert_candle_data.get('ema5_at_alert', 0):.8f}  "
-          f"EMA ref={alert_candle_data.get('ema_ref_at_alert', 0):.8f}  "
-          f"gap={alert_candle_data.get('gap_at_alert', 0):.10f}")
-    print(f"  Entry (live fill): ${entry_price:.8f}")
+    print(f"  EMA5@alert={alert_candle_data.get('ema5_at_alert', 0):.8f}")
+    print(f"  Entry (breakout): ${entry_price:.8f}")
     print(f"  Stop Loss: ${stop_loss:.8f}  (risk/unit: ${risk:.8f})")
     print(f"  Take Profit: ${take_profit:.8f}  (reward/unit: ${reward_per_unit:.8f})")
     print(f"  R:R = 1:{REWARD_MULTIPLE:g}")
@@ -595,8 +471,6 @@ def manage_position(df: pd.DataFrame, position: Dict, current_price: float) -> T
     take_profit = position['tp']
     size = position.get('position_size', 0.0)
 
-    # On the entry candle only post-entry price counts (candle High/Low include
-    # moves from before entry and would cause false stop-outs).
     is_entry_candle = int(df['timestamp'].iloc[-1]) == position.get('entry_candle_ts')
     if is_entry_candle:
         candle_high = current_price
@@ -648,7 +522,6 @@ def print_status_line(df: pd.DataFrame, position: Dict, alert_candle: Dict):
         if len(df) < 2:
             return
         current_price = df['Close'].iloc[-1]
-        gap_value, gap_position, candle_type = calculate_gap_for_status(df)
         ema5_current = df['ema_5'].iloc[-1] if 'ema_5' in df.columns else None
         ema5_valid = ema5_current is not None and not pd.isna(ema5_current)
 
@@ -667,10 +540,6 @@ def print_status_line(df: pd.DataFrame, position: Dict, alert_candle: Dict):
         parts = [f"⏱️{TIMEFRAME_MINUTES}m", f"💰 ${current_price:.8f}"]
         if ema5_valid:
             parts.append(f"EMA5: ${ema5_current:.8f}")
-        if gap_value is not None:
-            arrow = "⬇️" if gap_position == 'below' else "⬆️"
-            animal = "🐂" if candle_type == 'bullish' else "🐻"
-            parts.append(f"{animal}{arrow}{gap_value:.8f}")
         parts.append(f"💼${current_balance:.2f}")
         parts.append(f"P&L:${pnl:.2f}")
         if position is not None:
@@ -686,22 +555,19 @@ def print_alert_details(df: pd.DataFrame, alert_candle_data: Dict, alert_type: s
     ema5 = alert_candle_data.get('ema5_at_alert')
     if ema5 is None:
         return
-    ref = alert_candle_data.get('ema_ref_at_alert', ema5)
-    req = alert_candle_data.get('required_gap_at_alert', 0.0)
-    gap = alert_candle_data.get('gap_at_alert', 0.0)
     name = "BULLISH" if alert_type == 'bullish' else "BEARISH"
     print(f"\n🎯 {name} ALERT CANDLE DETAILS [{TIMEFRAME_MINUTES}m]:")
     print(f"  Candle: O=${alert_candle_data['Open']:.8f} "
           f"H=${alert_candle_data['High']:.8f} "
           f"L=${alert_candle_data['Low']:.8f} "
           f"C=${alert_candle_data['Close']:.8f}")
-    print(f"  EMA5@alert: ${ema5:.8f}   EMA ref used: ${ref:.8f}")
+    print(f"  EMA5@alert: ${ema5:.8f}")
     if alert_type == 'bullish':
-        print(f"  Gap (EMA ref - High): ${gap:.10f}  >  required ${req:.10f}")
+        print(f"  Rule: green candle, High < EMA5 (not touching)")
         print(f"  → Breakout level: ${alert_candle_data['High']:.8f}")
         print(f"  → Stop Loss: ${alert_candle_data['Low']:.8f}")
     else:
-        print(f"  Gap (Low - EMA ref): ${gap:.10f}  >  required ${req:.10f}")
+        print(f"  Rule: red candle, Low > EMA5 (not touching)")
         print(f"  → Breakout level: ${alert_candle_data['Low']:.8f}")
         print(f"  → Stop Loss: ${alert_candle_data['High']:.8f}")
 
@@ -715,13 +581,13 @@ def process_data(df: pd.DataFrame, is_candle_close: bool = False):
         df = calculate_indicators(df)
         current_price = float(df['Close'].iloc[-1])
 
-        # ---- Always manage open position first ----
+        # 1. Manage open position
         if position is not None:
             position, closed = manage_position(df, position, current_price)
             if closed:
                 alert_candle = None
 
-        # ---- LIVE breakout check runs on EVERY tick, even mid-candle ----
+        # 2. Live breakout check on the immediately next candle
         if position is None and alert_candle is not None:
             breakout, invalidated, fill_price = check_breakout_live(
                 df,
@@ -744,55 +610,27 @@ def process_data(df: pd.DataFrame, is_candle_close: bool = False):
                       f"next candle closed without breakout.")
                 alert_candle = None
 
-        # ---- Detect a new alert ONLY on candle close ----
+        # 3. Detect a new alert ONLY on candle close
         if is_candle_close and position is None and alert_candle is None and len(df) >= 6:
-            # Re-fetch the official closed candle so High/Low/EMA are final.
             df, verified = sync_closed_candle(df)
-            detected, alert_type, alert_idx = None, None, None
             if verified or not REQUIRE_VERIFIED_CANDLE:
                 if not verified:
                     print("\n⚠️ Could not verify closed candle via REST; using websocket data.")
                 detected, alert_type, alert_idx = check_alert_candle(df)
+                if detected is not None:
+                    alert_ts = int(detected['timestamp'])
+                    alert_candle = {
+                        'data': detected,
+                        'type': alert_type,
+                        'timestamp': alert_ts,
+                        'candle_index': alert_idx,
+                    }
+                    print(f"\n\n🚨 NEW {alert_type.upper()} ALERT CANDLE DETECTED [{TIMEFRAME_MINUTES}m]!")
+                    print_alert_details(df, detected, alert_type)
             else:
                 print("\n⏭️ Closed candle could not be verified via REST — alert check skipped.")
 
-            if detected is not None:
-                alert_ts = int(detected['timestamp'])
-                alert_candle = {
-                    'data': detected,
-                    'type': alert_type,
-                    'timestamp': alert_ts,
-                    'candle_index': alert_idx,
-                }
-                print(f"\n\n🚨 NEW {alert_type.upper()} ALERT CANDLE DETECTED [{TIMEFRAME_MINUTES}m]!")
-                print_alert_details(df, detected, alert_type)
-
         print_status_line(df, position, alert_candle)
-
-        now = time.time()
-        if not hasattr(process_data, 'last_detail_time'):
-            process_data.last_detail_time = now
-        if now - process_data.last_detail_time > 60:
-            print(f"\n{'='*80}")
-            print(f"📊 STATUS UPDATE [{TIMEFRAME_MINUTES}m]: "
-                  f"{datetime.datetime.now().strftime('%H:%M:%S')}")
-            if alert_candle is not None:
-                ac = alert_candle['data']
-                if alert_candle['type'] == 'bullish':
-                    print(f"🔔 Waiting for LIVE price to cross above ${ac['High']:.8f} "
-                          f"(SL: ${ac['Low']:.8f})")
-                else:
-                    print(f"🔔 Waiting for LIVE price to cross below ${ac['Low']:.8f} "
-                          f"(SL: ${ac['High']:.8f})")
-            if position is not None:
-                size = position.get('position_size', 0.0)
-                pos_pnl = (current_price - position['entry']) * size
-                if position['type'] == 'short':
-                    pos_pnl = -pos_pnl
-                print(f"📈 Active {position['type']} position: entry=${position['entry']:.8f}, "
-                      f"SL=${position['sl']:.8f}, TP=${position['tp']:.8f}, P&L=${pos_pnl:.4f}")
-            print(f"{'='*80}")
-            process_data.last_detail_time = now
 
     except Exception as e:
         print(f"\n❌ Processing error: {e}")
@@ -809,7 +647,7 @@ def _bucket_ts(ts_ms: int) -> int:
 def start_websocket():
     socketEndpoint = 'wss://stream.coindcx.com'
     sio = socketio.Client()
-    global full_data, candle_counter, current_candle_ts, last_processed_candle_ts
+    global full_data, candle_counter
 
     channel = f"{PAIR}_{WS_CHANNEL_SUFFIX}-futures"
 
@@ -821,7 +659,7 @@ def start_websocket():
 
     @sio.on('candlestick')
     def on_message(response):
-        global full_data, candle_counter, current_candle_ts, last_processed_candle_ts
+        global full_data, candle_counter, last_processed_candle_ts
         try:
             data = None
             if isinstance(response, dict):
@@ -903,17 +741,15 @@ def main():
     print(f"🚀 EMA5 ALERT CANDLE STRATEGY — {TIMEFRAME_MINUTES}m")
     print("=" * 80)
     print("\n📊 STRATEGY RULES:")
-    print("🐂 BULLISH: Green candle clearly BELOW EMA5 (High not touching)")
-    print("🐻 BEARISH: Red  candle clearly ABOVE EMA5 (Low not touching)")
-    print("🎯 ENTRY: price crosses alert High (bull) / Low (bear) on the NEXT candle")
+    print("🐂 BULLISH: green candle with High < EMA5 (not touching)")
+    print("🐻 BEARISH: red   candle with Low  > EMA5 (not touching)")
+    print("🎯 ENTRY: next candle high breaks alert High (bull) / "
+          "low breaks alert Low (bear)")
     print(f"        (mode: {'CLOSE-based' if BREAKOUT_ON_CLOSE else 'WICK/PRICE-based'})")
-    print("        (if next candle closes without breakout → setup invalidated)")
     print("🛑 STOP LOSS: Alert candle Low (bull) / High (bear)")
     print(f"🎯 TAKE PROFIT: {REWARD_MULTIPLE:g}x risk  (R:R = 1:{REWARD_MULTIPLE:g})")
     print(f"📏 RISK PER TRADE: {RISK_PER_TRADE*100:.2f}% of balance (max leverage {MAX_LEVERAGE:g}x)")
     print(f"⏱️ TIMEFRAME: {TIMEFRAME_MINUTES}m")
-    print(f"🔍 TOUCH CHECK: gap > max(EMA*{EMA_REL_EPS:g}, range*{RANGE_REL_EPS:g}, {MIN_ABS_GAP:g})  "
-          f"| segment check: {'ON' if STRICT_SEGMENT_CHECK else 'OFF'}")
     print(f"✔️ CLOSED-CANDLE VERIFY (REST): {'ON' if VERIFY_CLOSED_CANDLE else 'OFF'}")
     print("=" * 80)
     print(f"\n💰 Initial Balance: ${initial_balance:.2f}")
@@ -931,8 +767,6 @@ def main():
             df = calculate_indicators(df)
             detected, alert_type, alert_idx = check_alert_candle(df)
             if detected is not None:
-                # Skip stale startup alerts where the breakout already happened
-                # earlier in the current (forming) candle.
                 forming = df.iloc[-1]
                 already_broke = (
                     (alert_type == 'bullish' and float(forming['High']) > float(detected['High'])) or
