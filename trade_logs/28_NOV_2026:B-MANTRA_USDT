@@ -1,0 +1,598 @@
+
+✅ Connected to WebSocket!
+✅ Subscribed to B-MANTRA_USDT_1m-futures
+
+================================================================================
+🚀 EMA5 ALERT CANDLE STRATEGY — 1m
+================================================================================
+
+📊 STRATEGY RULES:
+🐂 BULLISH: green candle with High < EMA5 (not touching)
+🐻 BEARISH: red   candle with Low  > EMA5 (not touching)
+🎯 ENTRY: next candle high breaks alert High (bull) / low breaks alert Low (bear)
+        (mode: WICK/PRICE-based)
+🛑 STOP LOSS: Alert candle Low (bull) / High (bear)
+🎯 TAKE PROFIT: 3x risk  (R:R = 1:3)
+📏 RISK PER TRADE: 1.00% of balance (max leverage 5x)
+⏱️ TIMEFRAME: 1m
+✔️ CLOSED-CANDLE VERIFY (REST): ON
+================================================================================
+
+💰 Initial Balance: $10000.00
+
+📥 Loading historical data...
+✅ Fetched 500 historical 1m candles (5-day range request)
+✅ Loaded 500 candles
+
+🔄 Starting real-time trading...
+================================================================================
+🔌 Connecting to WebSocket...
+
+✅ Connected to WebSocket!
+✅ Subscribed to B-MANTRA_USDT_1m-futures
+
+⏱️1m | 💰 $0.00221300 | EMA5: $0.00220919 | 💼$10000.00 | P&L:$0.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00221400→0.00222000  L 0.00220400→0.00220000
+
+🚫 BULL REJECTED (touching/above EMA5): H=0.0022200000 EMA5=0.0022092883
+⏱️1m | 💰 $0.00221400 | EMA5: $0.00221191 | 💼$10000.00 | P&L:$0.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00221500→0.00222000  L 0.00221000→0.00222000
+⏱️1m | 💰 $0.00221300 | EMA5: $0.00221360 | 💼$10000.00 | P&L:$0.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00222400→0.00222000  L 0.00221400→0.00221000
+
+🚫 BEAR REJECTED (touching/below EMA5): L=0.0022100000 EMA5=0.0022119059
+⏱️1m | 💰 $0.00221400 | EMA5: $0.00221240 | 💼$10000.00 | P&L:$0.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00221400→0.00221000  L 0.00221100→0.00221000
+⏱️1m | 💰 $0.00221500 | EMA5: $0.00221334 | 💼$10000.00 | P&L:$0.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00221500→0.00221000  L 0.00221400→0.00221000
+⏱️1m | 💰 $0.00221000 | EMA5: $0.00221060 | 💼$10000.00 | P&L:$0.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00221700→0.00221000  L 0.00221000→0.00221000
+⏱️1m | 💰 $0.00220500 | EMA5: $0.00220747 | 💼$10000.00 | P&L:$0.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00221100→0.00221000  L 0.00220300→0.00220000
+⏱️1m | 💰 $0.00219600 | EMA5: $0.00220261 | 💼$10000.00 | P&L:$0.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00220600→0.00220000  L 0.00219300→0.00220000
+⏱️1m | 💰 $0.00219600 | EMA5: $0.00220107 | 💼$10000.00 | P&L:$0.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00219800→0.00220000  L 0.00219300→0.00220000
+⏱️1m | 💰 $0.00219400 | EMA5: $0.00219872 | 💼$10000.00 | P&L:$0.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00220200→0.00221000  L 0.00219000→0.00219000
+⏱️1m | 💰 $0.00218600 | EMA5: $0.00219188 | 💼$10000.00 | P&L:$0.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00219600→0.00219000  L 0.00217900→0.00218000
+
+🚫 BEAR REJECTED (touching/below EMA5): L=0.0021800000 EMA5=0.0021931608
+⏱️1m | 💰 $0.00219000 | EMA5: $0.00219140 | 💼$10000.00 | P&L:$0.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00219000→0.00219000  L 0.00218600→0.00218000
+
+🔎 BULL ACCEPT: O=0.0021800000 H=0.0021900000 C=0.0021900000 EMA5=0.0021921072 (H < EMA5)
+
+
+🚨 NEW BULLISH ALERT CANDLE DETECTED [1m]!
+
+🎯 BULLISH ALERT CANDLE DETAILS [1m]:
+  Candle: O=$0.00218000 H=$0.00219000 L=$0.00218000 C=$0.00219000
+  EMA5@alert: $0.00219211
+  Rule: green candle, High < EMA5 (not touching)
+  → Breakout level: $0.00219000
+  → Stop Loss: $0.00218000
+⏱️1m | 💰 $0.00219000 | EMA5: $0.00219140 | 💼$10000.00 | P&L:$0.00 | 🚨BULLISH                    
+📈 ENTERING LONG POSITION [1m]:
+  Alert candle @ 2026-11-28 10:34: O=0.00218000 H=0.00219000 L=0.00218000 C=0.00219000
+  EMA5@alert=0.00219211
+  Entry (breakout): $0.00219000
+  Stop Loss: $0.00218000  (risk/unit: $0.00001000)
+  Take Profit: $0.00222000  (reward/unit: $0.00003000)
+  R:R = 1:3
+  Size: 10000000.0000 units  ($$ risk: $100.00)
+⏱️1m | 💰 $0.00218500 | EMA5: $0.00218905 | 💼$10000.00 | P&L:$0.00 | 🔴LON:$-50.0000 | 🚨None                    
+🔴 CLOSED LONG (STOP LOSS):
+🔴 CLOSED LONG (STOP LOSS):
+  Entry: $0.00219000 | Exit: $0.00218000
+  P&L: $-100.0000 | Balance: $9800.00
+⏱️1m | 💰 $0.00217700 | EMA5: $0.00218638 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+  Entry: $0.00219000 | Exit: $0.00218000
+  P&L: $-100.0000 | Balance: $9800.00
+⏱️1m | 💰 $0.00217500 | EMA5: $0.00218392 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00219100→0.00219000  L 0.00216900→0.00217000
+⏱️1m | 💰 $0.00216700 | EMA5: $0.00217606 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00218300→0.00218000  L 0.00216500→0.00216000
+
+🚫 BEAR REJECTED (touching/below EMA5): L=0.0021600000 EMA5=0.0021782540
+⏱️1m | 💰 $0.00216700 | EMA5: $0.00217222 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00217100→0.00217000  L 0.00216500→0.00217000
+⏱️1m | 💰 $0.00216500 | EMA5: $0.00217011 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00217100→0.00218000  L 0.00216500→0.00217000
+⏱️1m | 💰 $0.00216400 | EMA5: $0.00216741 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00217200→0.00217000  L 0.00215800→0.00216000
+
+🚫 BEAR REJECTED (touching/below EMA5): L=0.0021600000 EMA5=0.0021691123
+⏱️1m | 💰 $0.00217400 | EMA5: $0.00217138 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00217300→0.00218000  L 0.00215900→0.00216000
+
+🚫 BULL REJECTED (touching/above EMA5): H=0.0021800000 EMA5=0.0021694082
+⏱️1m | 💰 $0.00217700 | EMA5: $0.00217363 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00217800→0.00218000  L 0.00217200→0.00218000
+⏱️1m | 💰 $0.00218000 | EMA5: $0.00217642 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00217800→0.00218000  L 0.00217600→0.00218000
+⏱️1m | 💰 $0.00217800 | EMA5: $0.00217702 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00218200→0.00218000  L 0.00217600→0.00217000
+⏱️1m | 💰 $0.00217900 | EMA5: $0.00217827 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00218000→0.00218000  L 0.00217400→0.00218000
+⏱️1m | 💰 $0.00217500 | EMA5: $0.00217607 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00217900→0.00218000  L 0.00217300→0.00218000
+⏱️1m | 💰 $0.00217600 | EMA5: $0.00217716 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00217600→0.00218000  L 0.00217200→0.00218000
+⏱️1m | 💰 $0.00217800 | EMA5: $0.00217870 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00217900→0.00218000  L 0.00217400→0.00218000
+⏱️1m | 💰 $0.00217900 | EMA5: $0.00217917 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00218000→0.00218000  L 0.00217700→0.00218000
+⏱️1m | 💰 $0.00218400 | EMA5: $0.00218226 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00218600→0.00219000  L 0.00217800→0.00218000
+⏱️1m | 💰 $0.00218700 | EMA5: $0.00218399 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00218900→0.00219000  L 0.00218300→0.00219000
+⏱️1m | 💰 $0.00219200 | EMA5: $0.00218784 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00219300→0.00219000  L 0.00218700→0.00218000
+
+🚫 BULL REJECTED (touching/above EMA5): H=0.0021900000 EMA5=0.0021854331
+⏱️1m | 💰 $0.00218600 | EMA5: $0.00218597 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00219200→0.00219000  L 0.00218400→0.00219000
+⏱️1m | 💰 $0.00219100 | EMA5: $0.00218942 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00219300→0.00220000  L 0.00218200→0.00219000
+
+🚫 BULL REJECTED (touching/above EMA5): H=0.0022000000 EMA5=0.0021913036
+⏱️1m | 💰 $0.00219300 | EMA5: $0.00219225 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00219400→0.00220000  L 0.00219000→0.00220000
+⏱️1m | 💰 $0.00218500 | EMA5: $0.00218909 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00219600→0.00219000  L 0.00218100→0.00218000
+
+🚫 BEAR REJECTED (touching/below EMA5): L=0.0021800000 EMA5=0.0021894683
+⏱️1m | 💰 $0.00219500 | EMA5: $0.00219165 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00219200→0.00219000  L 0.00218400→0.00219000
+⏱️1m | 💰 $0.00219300 | EMA5: $0.00219173 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00219800→0.00220000  L 0.00219000→0.00220000
+⏱️1m | 💰 $0.00218900 | EMA5: $0.00219127 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00219400→0.00220000  L 0.00219000→0.00220000
+⏱️1m | 💰 $0.00217800 | EMA5: $0.00218662 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00219000→0.00219000  L 0.00218100→0.00218000
+
+🚫 BEAR REJECTED (touching/below EMA5): L=0.0021800000 EMA5=0.0021902653
+⏱️1m | 💰 $0.00216900 | EMA5: $0.00217845 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00218200→0.00218000  L 0.00216600→0.00216000
+⏱️1m | 💰 $0.00216600 | EMA5: $0.00217460 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00217200→0.00218000  L 0.00215800→0.00216000
+
+🚫 BEAR REJECTED (touching/below EMA5): L=0.0021600000 EMA5=0.0021778957
+⏱️1m | 💰 $0.00216600 | EMA5: $0.00217151 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00216900→0.00216000  L 0.00216200→0.00216000
+⏱️1m | 💰 $0.00216500 | EMA5: $0.00216875 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00216900→0.00217000  L 0.00215800→0.00215000
+
+🔎 BULL ACCEPT: O=0.0021600000 H=0.0021700000 C=0.0021700000 EMA5=0.0021712870 (H < EMA5)
+
+
+🚨 NEW BULLISH ALERT CANDLE DETECTED [1m]!
+
+🎯 BULLISH ALERT CANDLE DETAILS [1m]:
+  Candle: O=$0.00216000 H=$0.00217000 L=$0.00215000 C=$0.00217000
+  EMA5@alert: $0.00217129
+  Rule: green candle, High < EMA5 (not touching)
+  → Breakout level: $0.00217000
+  → Stop Loss: $0.00215000
+⏱️1m | 💰 $0.00216200 | EMA5: $0.00216819 | 💼$9800.00 | P&L:$-200.00 | 🚨BULLISH                    
+⚠️ BULLISH alert INVALIDATED — next candle closed without breakout.
+⏱️1m | 💰 $0.00216200 | EMA5: $0.00216613 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00216900→0.00217000  L 0.00215800→0.00216000
+⏱️1m | 💰 $0.00216300 | EMA5: $0.00216546 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00216500→0.00216000  L 0.00216200→0.00216000
+⏱️1m | 💰 $0.00216100 | EMA5: $0.00216301 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00216600→0.00216000  L 0.00216000→0.00216000
+⏱️1m | 💰 $0.00216200 | EMA5: $0.00216260 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00216600→0.00217000  L 0.00215700→0.00215000
+⏱️1m | 💰 $0.00214900 | EMA5: $0.00215488 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00216200→0.00216000  L 0.00213500→0.00214000
+
+🚫 BEAR REJECTED (touching/below EMA5): L=0.0021400000 EMA5=0.0021548197
+⏱️1m | 💰 $0.00214400 | EMA5: $0.00214881 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00215100→0.00215000  L 0.00213900→0.00213000
+⏱️1m | 💰 $0.00214700 | EMA5: $0.00214998 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00214900→0.00215000  L 0.00214100→0.00214000
+
+🔎 BULL ACCEPT: O=0.0021400000 H=0.0021500000 C=0.0021500000 EMA5=0.0021521421 (H < EMA5)
+
+
+🚨 NEW BULLISH ALERT CANDLE DETECTED [1m]!
+
+🎯 BULLISH ALERT CANDLE DETAILS [1m]:
+  Candle: O=$0.00214000 H=$0.00215000 L=$0.00214000 C=$0.00215000
+  EMA5@alert: $0.00215214
+  Rule: green candle, High < EMA5 (not touching)
+  → Breakout level: $0.00215000
+  → Stop Loss: $0.00214000
+⏱️1m | 💰 $0.00214900 | EMA5: $0.00215109 | 💼$9800.00 | P&L:$-200.00 | 🚨BULLISH                    
+⚠️ BULLISH alert INVALIDATED — next candle closed without breakout.
+
+❌ Processing error: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "/var/folders/tt/ksb8v1f959s87234_wq7h4j80000gn/T/ipykernel_1523/185012161.py", line 609, in process_data
+    print(f"\n⚠️ {alert_candle['type'].upper()} alert INVALIDATED — "
+                  ~~~~~~~~~~~~^^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+⏱️1m | 💰 $0.00214500 | EMA5: $0.00214906 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00215000→0.00214000  L 0.00214500→0.00214000
+⏱️1m | 💰 $0.00214100 | EMA5: $0.00214438 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00214900→0.00214000  L 0.00214100→0.00214000
+⏱️1m | 💰 $0.00213800 | EMA5: $0.00214129 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00214300→0.00215000  L 0.00213600→0.00213000
+⏱️1m | 💰 $0.00212600 | EMA5: $0.00213471 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00214200→0.00214000  L 0.00212900→0.00213000
+
+🚫 BEAR REJECTED (touching/below EMA5): L=0.0021300000 EMA5=0.0021390651
+⏱️1m | 💰 $0.00212200 | EMA5: $0.00212870 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00212900→0.00213000  L 0.00210700→0.00211000
+
+🚫 BEAR REJECTED (touching/below EMA5): L=0.0021100000 EMA5=0.0021293767
+⏱️1m | 💰 $0.00211800 | EMA5: $0.00212350 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00212700→0.00213000  L 0.00211000→0.00211000
+⏱️1m | 💰 $0.00212100 | EMA5: $0.00212356 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00212600→0.00213000  L 0.00211800→0.00212000
+⏱️1m | 💰 $0.00212500 | EMA5: $0.00212441 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00212600→0.00212000  L 0.00212100→0.00212000
+⏱️1m | 💰 $0.00212800 | EMA5: $0.00212546 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00213000→0.00213000  L 0.00212300→0.00212000
+
+🚫 BULL REJECTED (touching/above EMA5): H=0.0021300000 EMA5=0.0021251855
+⏱️1m | 💰 $0.00212900 | EMA5: $0.00212686 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00213200→0.00213000  L 0.00212600→0.00213000
+⏱️1m | 💰 $0.00213100 | EMA5: $0.00212935 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00213700→0.00214000  L 0.00212800→0.00213000
+
+🚫 BULL REJECTED (touching/above EMA5): H=0.0021400000 EMA5=0.0021311936
+⏱️1m | 💰 $0.00212900 | EMA5: $0.00213020 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00213500→0.00213000  L 0.00212900→0.00213000
+⏱️1m | 💰 $0.00213200 | EMA5: $0.00213146 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00213200→0.00214000  L 0.00212700→0.00212000
+
+🚫 BULL REJECTED (touching/above EMA5): H=0.0021400000 EMA5=0.0021338638
+⏱️1m | 💰 $0.00213000 | EMA5: $0.00213194 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00213500→0.00213000  L 0.00212800→0.00213000
+⏱️1m | 💰 $0.00213100 | EMA5: $0.00213192 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00213500→0.00213000  L 0.00213000→0.00213000
+⏱️1m | 💰 $0.00213000 | EMA5: $0.00213010 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00213200→0.00213000  L 0.00212600→0.00212000
+
+🚫 BEAR REJECTED (touching/below EMA5): L=0.0021200000 EMA5=0.0021278115
+⏱️1m | 💰 $0.00212800 | EMA5: $0.00212769 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00213300→0.00213000  L 0.00212600→0.00212000
+
+🚫 BEAR REJECTED (touching/below EMA5): L=0.0021200000 EMA5=0.0021252077
+⏱️1m | 💰 $0.00212700 | EMA5: $0.00212598 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00212800→0.00212000  L 0.00212200→0.00212000
+⏱️1m | 💰 $0.00212600 | EMA5: $0.00212488 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00213100→0.00213000  L 0.00212100→0.00212000
+⏱️1m | 💰 $0.00212600 | EMA5: $0.00212695 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00213600→0.00213000  L 0.00212500→0.00213000
+⏱️1m | 💰 $0.00212000 | EMA5: $0.00212315 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00213100→0.00213000  L 0.00211800→0.00212000
+⏱️1m | 💰 $0.00211400 | EMA5: $0.00212025 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00212600→0.00212000  L 0.00211200→0.00211000
+
+🚫 BEAR REJECTED (touching/below EMA5): L=0.0021100000 EMA5=0.0021220438
+⏱️1m | 💰 $0.00211800 | EMA5: $0.00212002 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00212000→0.00211000  L 0.00210900→0.00211000
+⏱️1m | 💰 $0.00211400 | EMA5: $0.00211646 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00211900→0.00211000  L 0.00211400→0.00211000
+⏱️1m | 💰 $0.00211800 | EMA5: $0.00211660 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00211900→0.00212000  L 0.00211300→0.00211000
+
+🚫 BULL REJECTED (touching/above EMA5): H=0.0021200000 EMA5=0.0021169019
+⏱️1m | 💰 $0.00211600 | EMA5: $0.00211640 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00211900→0.00212000  L 0.00211100→0.00212000
+⏱️1m | 💰 $0.00211400 | EMA5: $0.00211575 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00211900→0.00212000  L 0.00211400→0.00212000
+⏱️1m | 💰 $0.00211100 | EMA5: $0.00211461 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00211500→0.00212000  L 0.00211000→0.00212000
+⏱️1m | 💰 $0.00211700 | EMA5: $0.00211793 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🚫 BULL REJECTED (touching/above EMA5): H=0.0021200000 EMA5=0.0021193880
+⏱️1m | 💰 $0.00211600 | EMA5: $0.00211773 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00212000→0.00212000  L 0.00211400→0.00211000
+
+🚫 BULL REJECTED (touching/above EMA5): H=0.0021200000 EMA5=0.0021195920
+⏱️1m | 💰 $0.00210800 | EMA5: $0.00211404 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00211800→0.00211000  L 0.00210500→0.00211000
+⏱️1m | 💰 $0.00210700 | EMA5: $0.00211118 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00211200→0.00212000  L 0.00210500→0.00210000
+
+🚫 BEAR REJECTED (touching/below EMA5): L=0.0021000000 EMA5=0.0021109298
+⏱️1m | 💰 $0.00210700 | EMA5: $0.00210875 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00211100→0.00211000  L 0.00210000→0.00210000
+
+🔎 BULL ACCEPT: O=0.0021000000 H=0.0021100000 C=0.0021100000 EMA5=0.0021106199 (H < EMA5)
+
+
+🚨 NEW BULLISH ALERT CANDLE DETECTED [1m]!
+
+🎯 BULLISH ALERT CANDLE DETAILS [1m]:
+  Candle: O=$0.00210000 H=$0.00211000 L=$0.00210000 C=$0.00211000
+  EMA5@alert: $0.00211062
+  Rule: green candle, High < EMA5 (not touching)
+  → Breakout level: $0.00211000
+  → Stop Loss: $0.00210000
+⏱️1m | 💰 $0.00210800 | EMA5: $0.00210975 | 💼$9800.00 | P&L:$-200.00 | 🚨BULLISH                    
+⚠️ BULLISH alert INVALIDATED — next candle closed without breakout.
+⏱️1m | 💰 $0.00210900 | EMA5: $0.00210950 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00210900→0.00211000  L 0.00210200→0.00211000
+⏱️1m | 💰 $0.00210500 | EMA5: $0.00210741 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00210900→0.00211000  L 0.00210500→0.00211000
+⏱️1m | 💰 $0.00211300 | EMA5: $0.00211157 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00211400→0.00212000  L 0.00210400→0.00210000
+
+🚫 BULL REJECTED (touching/above EMA5): H=0.0021200000 EMA5=0.0021135170
+⏱️1m | 💰 $0.00211400 | EMA5: $0.00211356 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00211600→0.00212000  L 0.00210900→0.00212000
+⏱️1m | 💰 $0.00211700 | EMA5: $0.00211686 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00211900→0.00212000  L 0.00211300→0.00212000
+⏱️1m | 💰 $0.00211600 | EMA5: $0.00211694 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00212000→0.00211000  L 0.00211700→0.00211000
+⏱️1m | 💰 $0.00211200 | EMA5: $0.00211322 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00211700→0.00211000  L 0.00211000→0.00211000
+⏱️1m | 💰 $0.00211200 | EMA5: $0.00211230 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00211400→0.00211000  L 0.00211100→0.00211000
+⏱️1m | 💰 $0.00211300 | EMA5: $0.00211260 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00211700→0.00211000  L 0.00211100→0.00211000
+⏱️1m | 💰 $0.00210300 | EMA5: $0.00210718 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00211400→0.00211000  L 0.00210500→0.00210000
+
+🚫 BEAR REJECTED (touching/below EMA5): L=0.0021000000 EMA5=0.0021076041
+⏱️1m | 💰 $0.00210300 | EMA5: $0.00210505 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00210600→0.00210000  L 0.00210000→0.00210000
+⏱️1m | 💰 $0.00210700 | EMA5: $0.00210614 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00210800→0.00210000  L 0.00210200→0.00210000
+⏱️1m | 💰 $0.00210600 | EMA5: $0.00210461 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00210900→0.00211000  L 0.00210000→0.00209000
+
+🚫 BULL REJECTED (touching/above EMA5): H=0.0021100000 EMA5=0.0021055864
+⏱️1m | 💰 $0.00210900 | EMA5: $0.00210748 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00211000→0.00211000  L 0.00210500→0.00210000
+
+🚫 BULL REJECTED (touching/above EMA5): H=0.0021100000 EMA5=0.0021070576
+⏱️1m | 💰 $0.00210300 | EMA5: $0.00210391 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00211000→0.00210000  L 0.00209800→0.00210000
+⏱️1m | 💰 $0.00210900 | EMA5: $0.00210709 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00211000→0.00211000  L 0.00210100→0.00210000
+⏱️1m | 💰 $0.00211300 | EMA5: $0.00210817 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00211200→0.00211000  L 0.00210600→0.00210000
+
+🚫 BULL REJECTED (touching/above EMA5): H=0.0021100000 EMA5=0.0021054245
+⏱️1m | 💰 $0.00211100 | EMA5: $0.00210897 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00211300→0.00211000  L 0.00210800→0.00211000
+⏱️1m | 💰 $0.00210700 | EMA5: $0.00210720 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00211200→0.00211000  L 0.00210500→0.00211000
+⏱️1m | 💰 $0.00210900 | EMA5: $0.00210810 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00210900→0.00210000  L 0.00210500→0.00210000
+⏱️1m | 💰 $0.00211200 | EMA5: $0.00210836 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00211500→0.00211000  L 0.00210700→0.00211000
+⏱️1m | 💰 $0.00211200 | EMA5: $0.00210994 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00211600→0.00212000  L 0.00210800→0.00210000
+
+🚫 BULL REJECTED (touching/above EMA5): H=0.0021200000 EMA5=0.0021112493
+⏱️1m | 💰 $0.00211400 | EMA5: $0.00211278 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00211500→0.00212000  L 0.00211000→0.00212000
+⏱️1m | 💰 $0.00212600 | EMA5: $0.00212096 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00212900→0.00213000  L 0.00211400→0.00212000
+
+🚫 BULL REJECTED (touching/above EMA5): H=0.0021300000 EMA5=0.0021194441
+⏱️1m | 💰 $0.00211800 | EMA5: $0.00211931 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00212800→0.00212000  L 0.00211800→0.00212000
+⏱️1m | 💰 $0.00211700 | EMA5: $0.00211817 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00212000→0.00212000  L 0.00211400→0.00212000
+⏱️1m | 💰 $0.00212200 | EMA5: $0.00212145 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00212600→0.00212000  L 0.00211600→0.00212000
+⏱️1m | 💰 $0.00211900 | EMA5: $0.00211937 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00212500→0.00212000  L 0.00211600→0.00212000
+⏱️1m | 💰 $0.00211700 | EMA5: $0.00211828 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00211900→0.00211000  L 0.00211300→0.00211000
+⏱️1m | 💰 $0.00211800 | EMA5: $0.00211760 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00212000→0.00211000  L 0.00211700→0.00211000
+⏱️1m | 💰 $0.00211900 | EMA5: $0.00211762 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00212300→0.00212000  L 0.00211800→0.00211000
+⏱️1m | 💰 $0.00212300 | EMA5: $0.00211978 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00212500→0.00213000  L 0.00211900→0.00211000
+⏱️1m | 💰 $0.00211900 | EMA5: $0.00211856 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00212300→0.00213000  L 0.00211800→0.00211000
+
+🚫 BULL REJECTED (touching/above EMA5): H=0.0021300000 EMA5=0.0021216728
+⏱️1m | 💰 $0.00211900 | EMA5: $0.00212019 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00212200→0.00212000  L 0.00211800→0.00212000
+⏱️1m | 💰 $0.00211700 | EMA5: $0.00211927 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00212400→0.00212000  L 0.00211700→0.00212000
+⏱️1m | 💰 $0.00211700 | EMA5: $0.00211844 | 💼$9800.00 | P&L:$-200.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00211900→0.00212000  L 0.00211500→0.00211000
+
+🔎 BULL ACCEPT: O=0.0021100000 H=0.0021200000 C=0.0021200000 EMA5=0.0021204956 (H < EMA5)
+
+
+🚨 NEW BULLISH ALERT CANDLE DETECTED [1m]!
+
+🎯 BULLISH ALERT CANDLE DETAILS [1m]:
+  Candle: O=$0.00211000 H=$0.00212000 L=$0.00211000 C=$0.00212000
+  EMA5@alert: $0.00212050
+  Rule: green candle, High < EMA5 (not touching)
+  → Breakout level: $0.00212000
+  → Stop Loss: $0.00211000
+⏱️1m | 💰 $0.00212000 | EMA5: $0.00212033 | 💼$9800.00 | P&L:$-200.00 | 🚨BULLISH                    
+📈 ENTERING LONG POSITION [1m]:
+  Alert candle @ 2026-11-28 12:20: O=0.00211000 H=0.00212000 L=0.00211000 C=0.00212000
+  EMA5@alert=0.00212050
+  Entry (breakout): $0.00212000
+  Stop Loss: $0.00211000  (risk/unit: $0.00001000)
+  Take Profit: $0.00215000  (reward/unit: $0.00003000)
+  R:R = 1:3
+  Size: 9800000.0000 units  ($$ risk: $98.00)
+⏱️1m | 💰 $0.00214800 | EMA5: $0.00214495 | 💼$9800.00 | P&L:$-200.00 | 🟢LON:$274.4000 | 🚨None                    
+🔴 CLOSED LONG (TAKE PROFIT):
+🔴 CLOSED LONG (TAKE PROFIT):
+  Entry: $0.00212000 | Exit: $0.00215000
+  P&L: $294.0000 | Balance: $10388.00
+⏱️1m | 💰 $0.00215000 | EMA5: $0.00214561 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+  Entry: $0.00212000 | Exit: $0.00215000
+  P&L: $294.0000 | Balance: $10388.00
+⏱️1m | 💰 $0.00214700 | EMA5: $0.00214630 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00215700→0.00215000  L 0.00214500→0.00214000
+
+🚫 BULL REJECTED (touching/above EMA5): H=0.0021500000 EMA5=0.0021456148
+⏱️1m | 💰 $0.00213400 | EMA5: $0.00213916 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00215000→0.00215000  L 0.00213400→0.00214000
+
+🚫 BEAR REJECTED (touching/below EMA5): L=0.0021400000 EMA5=0.0021437432
+⏱️1m | 💰 $0.00213500 | EMA5: $0.00213889 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00213600→0.00214000  L 0.00213100→0.00214000
+⏱️1m | 💰 $0.00213300 | EMA5: $0.00213744 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00213600→0.00214000  L 0.00213200→0.00214000
+⏱️1m | 💰 $0.00213100 | EMA5: $0.00213574 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00213400→0.00214000  L 0.00213100→0.00214000
+⏱️1m | 💰 $0.00212500 | EMA5: $0.00213216 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00213300→0.00213000  L 0.00212500→0.00213000
+⏱️1m | 💰 $0.00212600 | EMA5: $0.00213085 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00212600→0.00213000  L 0.00212300→0.00213000
+⏱️1m | 💰 $0.00212700 | EMA5: $0.00212964 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00212700→0.00213000  L 0.00212200→0.00213000
+⏱️1m | 💰 $0.00212900 | EMA5: $0.00213091 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00213100→0.00213000  L 0.00212300→0.00212000
+⏱️1m | 💰 $0.00212900 | EMA5: $0.00213042 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00213200→0.00213000  L 0.00212900→0.00213000
+⏱️1m | 💰 $0.00213000 | EMA5: $0.00213109 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00213200→0.00213000  L 0.00212800→0.00213000
+⏱️1m | 💰 $0.00213000 | EMA5: $0.00213088 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00213200→0.00213000  L 0.00212900→0.00213000
+⏱️1m | 💰 $0.00213000 | EMA5: $0.00212984 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00213100→0.00213000  L 0.00212600→0.00213000
+⏱️1m | 💰 $0.00213000 | EMA5: $0.00212997 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00213300→0.00213000  L 0.00212800→0.00212000
+
+🚫 BEAR REJECTED (touching/below EMA5): L=0.0021200000 EMA5=0.0021269556
+⏱️1m | 💰 $0.00213000 | EMA5: $0.00212909 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00213300→0.00213000  L 0.00212900→0.00213000
+⏱️1m | 💰 $0.00212800 | EMA5: $0.00212799 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00213300→0.00213000  L 0.00212800→0.00213000
+⏱️1m | 💰 $0.00212700 | EMA5: $0.00212773 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00212900→0.00213000  L 0.00212600→0.00213000
+⏱️1m | 💰 $0.00212600 | EMA5: $0.00212738 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00212700→0.00212000  L 0.00211800→0.00212000
+⏱️1m | 💰 $0.00212700 | EMA5: $0.00212636 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00212900→0.00212000  L 0.00212400→0.00212000
+⏱️1m | 💰 $0.00213300 | EMA5: $0.00212902 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00213600→0.00214000  L 0.00212600→0.00213000
+
+🚫 BULL REJECTED (touching/above EMA5): H=0.0021400000 EMA5=0.0021293624
+⏱️1m | 💰 $0.00213600 | EMA5: $0.00213305 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00213700→0.00214000  L 0.00213300→0.00214000
+⏱️1m | 💰 $0.00213600 | EMA5: $0.00213551 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00214100→0.00214000  L 0.00213600→0.00214000
+⏱️1m | 💰 $0.00213500 | EMA5: $0.00213512 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00213900→0.00214000  L 0.00213400→0.00214000
+⏱️1m | 💰 $0.00213200 | EMA5: $0.00213438 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00213600→0.00213000  L 0.00212900→0.00213000
+⏱️1m | 💰 $0.00212700 | EMA5: $0.00213036 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00213300→0.00213000  L 0.00212700→0.00213000
+⏱️1m | 💰 $0.00213100 | EMA5: $0.00213191 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00213300→0.00213000  L 0.00212800→0.00213000
+⏱️1m | 💰 $0.00212900 | EMA5: $0.00213057 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00213200→0.00213000  L 0.00212900→0.00213000
+⏱️1m | 💰 $0.00212800 | EMA5: $0.00212927 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00213000→0.00213000  L 0.00212700→0.00212000
+
+🔎 BULL ACCEPT: O=0.0021200000 H=0.0021300000 C=0.0021300000 EMA5=0.0021309018 (H < EMA5)
+
+
+🚨 NEW BULLISH ALERT CANDLE DETECTED [1m]!
+
+🎯 BULLISH ALERT CANDLE DETAILS [1m]:
+  Candle: O=$0.00212000 H=$0.00213000 L=$0.00212000 C=$0.00213000
+  EMA5@alert: $0.00213090
+  Rule: green candle, High < EMA5 (not touching)
+  → Breakout level: $0.00213000
+  → Stop Loss: $0.00212000
+⏱️1m | 💰 $0.00213000 | EMA5: $0.00213060 | 💼$10388.00 | P&L:$388.00 | 🚨BULLISH                    
+⚠️ BULLISH alert INVALIDATED — next candle closed without breakout.
+⚠️ BULLISH alert INVALIDATED — next candle closed without breakout.
+
+⏱️1m | 💰 $0.00213000 | EMA5: $0.00213040 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00213000→0.00213000  L 0.00212700→0.00213000
+⏱️1m | 💰 $0.00212700 | EMA5: $0.00212838 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00213000→0.00213000  L 0.00212600→0.00213000
+⏱️1m | 💰 $0.00211600 | EMA5: $0.00212240 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00212800→0.00212000  L 0.00211200→0.00212000
+⏱️1m | 💰 $0.00211600 | EMA5: $0.00212108 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00211800→0.00212000  L 0.00211300→0.00212000
+⏱️1m | 💰 $0.00211900 | EMA5: $0.00212128 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00211900→0.00212000  L 0.00211600→0.00212000
+⏱️1m | 💰 $0.00211800 | EMA5: $0.00212004 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00212000→0.00212000  L 0.00211700→0.00212000
+⏱️1m | 💰 $0.00211600 | EMA5: $0.00211869 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00211800→0.00211000  L 0.00211500→0.00211000
+⏱️1m | 💰 $0.00211900 | EMA5: $0.00211857 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00211900→0.00211000  L 0.00211500→0.00211000
+⏱️1m | 💰 $0.00211900 | EMA5: $0.00211760 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00212000→0.00211000  L 0.00211700→0.00211000
+⏱️1m | 💰 $0.00212000 | EMA5: $0.00211714 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00212000→0.00211000  L 0.00211800→0.00211000
+⏱️1m | 💰 $0.00212500 | EMA5: $0.00211917 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00212500→0.00212000  L 0.00211900→0.00211000
+
+🚫 BULL REJECTED (touching/above EMA5): H=0.0021200000 EMA5=0.0021149208
+⏱️1m | 💰 $0.00212300 | EMA5: $0.00211941 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00212600→0.00212000  L 0.00212200→0.00212000
+⏱️1m | 💰 $0.00212700 | EMA5: $0.00212238 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00212800→0.00213000  L 0.00211800→0.00211000
+
+🚫 BULL REJECTED (touching/above EMA5): H=0.0021300000 EMA5=0.0021210759
+⏱️1m | 💰 $0.00212800 | EMA5: $0.00212470 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00212700→0.00213000  L 0.00212500→0.00213000
+⏱️1m | 💰 $0.00212900 | EMA5: $0.00212680 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00213000→0.00213000  L 0.00212800→0.00213000
+⏱️1m | 💰 $0.00213200 | EMA5: $0.00212935 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00213300→0.00213000  L 0.00212900→0.00213000
+⏱️1m | 💰 $0.00212900 | EMA5: $0.00212849 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00213300→0.00213000  L 0.00212700→0.00213000
+⏱️1m | 💰 $0.00213300 | EMA5: $0.00213111 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00213400→0.00213000  L 0.00212800→0.00213000
+⏱️1m | 💰 $0.00213400 | EMA5: $0.00213170 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00214000→0.00213000  L 0.00213200→0.00213000
+⏱️1m | 💰 $0.00213100 | EMA5: $0.00212976 | 💼$10388.00 | P&L:$388.00 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00213600→0.00214000  L 0.00212900→0.00213000
+
+🔎 BEAR ACCEPT: O=0.0021400000 L=0.0021300000 C=0.0021300000 EMA5=0.0021294777 (L > EMA5)
+
+
+🚨 NEW BEARISH ALERT CANDLE DETECTED [1m]!
+
+🎯 BEARISH ALERT CANDLE DETAILS [1m]:
+  Candle: O=$0.00214000 H=$0.00214000 L=$0.00213000 C=$0.00213000
+  EMA5@alert: $0.00212948
+  Rule: red candle, Low > EMA5 (not touching)
+  → Breakout level: $0.00213000
+  → Stop Loss: $0.00214000
+⏱️1m | 💰 $0.00213100 | EMA5: $0.00212999 | 💼$10388.00 | P&L:$388.00 | 🚨BEARISH                    
+📉 ENTERING SHORT POSITION [1m]:
+  Alert candle @ 2026-11-28 13:32: O=0.00214000 H=0.00214000 L=0.00213000 C=0.00213000
+  EMA5@alert=0.00212948
+  Entry (breakout): $0.00213000
+  Stop Loss: $0.00214000  (risk/unit: $0.00001000)
+  Take Profit: $0.00210000  (reward/unit: $0.00003000)
+  R:R = 1:3
+  Size: 10388000.0000 units  ($$ risk: $103.88)
+⏱️1m | 💰 $0.00210300 | EMA5: $0.00210600 | 💼$10388.00 | P&L:$388.00 | 🟢SHO:$280.4760 | 🚨None                    
+🔴 CLOSED SHORT (TAKE PROFIT):
+  Entry: $0.00213000 | Exit: $0.00210000
+  P&L: $311.6400 | Balance: $10699.64
+⏱️1m | 💰 $0.00210100 | EMA5: $0.00210389 | 💼$10699.64 | P&L:$699.64 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00210800→0.00211000  L 0.00209700→0.00210000
+
+🚫 BEAR REJECTED (touching/below EMA5): L=0.0021000000 EMA5=0.0021050015
+⏱️1m | 💰 $0.00210200 | EMA5: $0.00210356 | 💼$10699.64 | P&L:$699.64 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00210500→0.00210000  L 0.00210100→0.00210000
+⏱️1m | 💰 $0.00210000 | EMA5: $0.00210148 | 💼$10699.64 | P&L:$699.64 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00210300→0.00210000  L 0.00209800→0.00209000
+⏱️1m | 💰 $0.00210200 | EMA5: $0.00210232 | 💼$10699.64 | P&L:$699.64 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00210500→0.00210000  L 0.00209900→0.00210000
+⏱️1m | 💰 $0.00210100 | EMA5: $0.00210144 | 💼$10699.64 | P&L:$699.64 | 🚨None                    
+🔧 Closed candle corrected via REST: H 0.00210400→0.00210000  L 0.00210000→0.00210000
+⏱️1m | 💰 $0.00210100 | EMA5: $0.00210099 | 💼$10699.64 | P&L:$699.64 | 🚨None                    
